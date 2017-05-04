@@ -12,7 +12,14 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+
+        RepositoryManager.getRedditTopList(baseURL: "https://www.reddit.com/top/.json") { (data, error) in
+            
+            print(data)
+            
+            
+        }
+    
     }
 
     override func didReceiveMemoryWarning() {

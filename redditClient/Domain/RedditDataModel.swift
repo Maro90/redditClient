@@ -12,16 +12,16 @@ class RedditDataModel: NSObject {
     
     var title : String!
     var author : String!
-    var date : String!
+    var date : Date!
     var thumbnail : String?
     var commentsCount = 0
     var subReddit : String!
 
-    init(title: String, author: String, date: String, thumbnail: String?, commentsCount: Int, subReddit: String) {
+    init(title: String, author: String, date: NSNumber, thumbnail: String?, commentsCount: Int, subReddit: String) {
         
         self.title = title
         self.author = author
-        self.date = date
+        self.date = Date(timeIntervalSince1970: TimeInterval(date))
         self.thumbnail = thumbnail
         self.commentsCount = commentsCount
         self.subReddit = subReddit

@@ -12,12 +12,19 @@ class RedditParser: NSObject {
     
     enum RedditModelParserError: Error {
         case RedditModelWithOutData
-        case RedditModelsWithOutData
-        case RedditModelWithOutTitle
-        case RedditModelWithOutId
-        case RedditModelWithOutDescription
-        case RedditModelWithOutPrice
-        case RedditModelWithOutDisplayPrice
+        case RedditListNull
+        case RedditListEmpthy
+        case RedditListWithOutData
+        case RedditListWithoutChildren
+        case RedditListChildrenEmpthy
+        case RedditListChildrenWithoutData
+        case RedditListChildrenWithoutAnyValid
+        
+        case RedditModelWithoutTitle
+        case RedditModelWithoutAuthor
+        case RedditModelWithoutCreated
+        case RedditModelWithoutNumComments
+        case RedditModelWithoutSubreddit
     }
     
     
@@ -25,36 +32,48 @@ class RedditParser: NSObject {
         var redditList = [RedditDataModel]()
         
         if responseBody == nil {
-            throw AppDebug.Throw(info: "Response body is null", error:RedditModelParserError.RedditModelsWithOutData)
+            throw AppDebug.Throw(info: "Response body is null", error:RedditModelParserError.RedditListNull)
         }
         
-        if let body = responseBody as? Dictionary<String, AnyObject> {
-            if let data = body["data"] as? [Dictionary<String, AnyObject>] {
-                if data.count == 0 {
-                    throw AppDebug.Throw(info: "error array empty", error:RedditModelParserError.RedditModelsWithOutData)
-                }
-                
-                for object in data {
-                    do {
-                        let RedditModel = try self.createRedditDataModel(data: object)
-                        if RedditModel != nil {
-                            redditList.append(RedditModel!)
-                        }
-                    } catch {
-//                        AppDebug.Log(title: object, info: "Exception Block")
+        if let body = responseBody as? [String: AnyObject] {
+            if let data = body["data"] as? [String: AnyObject] {
+                if let children = data["children"] as? [[String: AnyObject]] {
+                    
+                    
+                    if children.count == 0 {
+                        throw AppDebug.Throw(info: "error array empty", error:RedditModelParserError.RedditListChildrenEmpthy)
                     }
+                    
+                    for object in children {
+                        if let childrenData = object["data"] as? [String:AnyObject] {
+                            do {
+                                let RedditModel = try self.createRedditDataModel(data: childrenData)
+                                if RedditModel != nil {
+                                    redditList.append(RedditModel!)
+                                }
+                            } catch {
+                                AppDebug.Log(title: "Exception Block", info: object)
+                            }
+
+                        }
+                        else{
+                            throw AppDebug.Throw(info: "RedditModels List error", error:RedditModelParserError.RedditListChildrenWithoutData)
+                        }
+                    }
+                    
+                } else {
+                    throw AppDebug.Throw(info: "RedditModels List error", error:RedditModelParserError.RedditListWithoutChildren)
                 }
-                
             } else {
-                throw AppDebug.Throw(info: "RedditModels List error", error:RedditModelParserError.RedditModelsWithOutData)
+                throw AppDebug.Throw(info: "RedditModels List error", error:RedditModelParserError.RedditListWithOutData)
             }
         } else {
-            throw AppDebug.Throw(info: "Object not valid", error:RedditModelParserError.RedditModelsWithOutData)
+            throw AppDebug.Throw(info: "Object not valid", error:RedditModelParserError.RedditListEmpthy)
             
         }
         
         if redditList.count == 0 {
-            throw AppDebug.Throw(info: "RedditModel List is empty", error:RedditModelParserError.RedditModelsWithOutData)
+            throw AppDebug.Throw(info: "RedditModel List is empty", error:RedditModelParserError.RedditListChildrenWithoutAnyValid)
             
         }
         
@@ -65,34 +84,39 @@ class RedditParser: NSObject {
     public static func createRedditDataModel( data : Dictionary<String, AnyObject>) throws -> RedditDataModel? {
         if let title = data["title"] as? String {
             
-            if let id = data["id"] as? NSNumber {
+            if let author = data["author"] as? String {
                 
-                if let info = data["description"] as? String {
+                if let date = data["created"] as? NSNumber {
                     
-                    if let price = data["price"] as? Dictionary<String, AnyObject> {
+                    if let num_comments = data["num_comments"] as? Int {
                         
-                        if let priceValue = price["displayPrice"] as? String{
+                        if let subreddit = data["subreddit_id"] as? String{
                             
-                            return RedditDataModel()
+                            
+                            //Could be null
+                            let thumbnail = data["thumbnail"] as? String
+                            
+                            return RedditDataModel(title: title, author: author, date: date, thumbnail: thumbnail, commentsCount: num_comments, subReddit: subreddit)
+                            
                             
                         } else {
-                            throw AppDebug.Throw(info: "RedditModel without value of price", error:RedditModelParserError.RedditModelWithOutDisplayPrice)
+                            throw AppDebug.Throw(info: "RedditModel without subreddit_id", error:RedditModelParserError.RedditModelWithoutSubreddit)
                         }
                         
                     } else {
-                        throw AppDebug.Throw(info: "RedditModel without Price", error:RedditModelParserError.RedditModelWithOutPrice)
+                        throw AppDebug.Throw(info: "RedditModel without num_comments", error:RedditModelParserError.RedditModelWithoutNumComments)
                     }
                     
                 } else {
-                    throw AppDebug.Throw(info: "RedditModel without Description", error:RedditModelParserError.RedditModelWithOutDescription)
+                    throw AppDebug.Throw(info: "RedditModel without Created", error:RedditModelParserError.RedditModelWithoutCreated)
                 }
                 
             } else {
-                throw AppDebug.Throw(info: "RedditModel without Id", error:RedditModelParserError.RedditModelWithOutId)
+                throw AppDebug.Throw(info: "RedditModel without author", error:RedditModelParserError.RedditModelWithoutAuthor)
             }
             
         } else {
-            throw AppDebug.Throw(info: "RedditModel without title", error:RedditModelParserError.RedditModelWithOutTitle)
+            throw AppDebug.Throw(info: "RedditModel without title", error:RedditModelParserError.RedditModelWithoutTitle)
         }        
     }
 }

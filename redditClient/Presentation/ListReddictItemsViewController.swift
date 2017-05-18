@@ -13,6 +13,8 @@ class ListReddictItemsViewController: UIViewController, UITableViewDelegate, UIT
     @IBOutlet weak var tableView: UITableView!
     var redditList = [RedditDataModel]()
     
+    let domain = Domain(repository: RepositoryAlamofire(), parser: RedditParser())
+    
     lazy var refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(ListReddictItemsViewController.refreshData(_:)), for: UIControlEvents.valueChanged)
@@ -43,9 +45,16 @@ class ListReddictItemsViewController: UIViewController, UITableViewDelegate, UIT
 
     func refreshData(_ refreshControl: UIRefreshControl?) {
         self.refreshControl.beginRefreshing()
-        RepositoryManager.getRedditTopList() { (data) in
+        
+        
+        domain.getRedditTopList() { (data) in
             
-            self.redditList = data
+            guard data is [RedditDataModel] else {
+                AppDebug.Log(title: "Wrong Model", info: data)
+                return
+            }
+            
+            self.redditList = data as! [RedditDataModel]
             self.tableView.reloadData()
             self.refreshControl.endRefreshing()
         }

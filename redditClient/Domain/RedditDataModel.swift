@@ -10,12 +10,12 @@ import UIKit
 
 class RedditDataModel: NSObject {
     
-    var title : String!
-    var author : String!
-    var date : Date!
+    var title : String
+    var author : String
+    var date : Date
     var thumbnail : String?
     var commentsCount = 0
-    var subReddit : String!
+    var subReddit : String
 
     init(title: String, author: String, date: NSNumber, thumbnail: String?, commentsCount: Int, subReddit: String) {
         

@@ -19,6 +19,9 @@
 		758EBDE41EBB7CCB003BE5A8 /* AppDebug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 758EBDE31EBB7CCB003BE5A8 /* AppDebug.swift */; };
 		758EBDE71EBB97FC003BE5A8 /* RepositoryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 758EBDE61EBB97FC003BE5A8 /* RepositoryManager.swift */; };
 		758EBDE91EBB9B36003BE5A8 /* RedditParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 758EBDE81EBB9B36003BE5A8 /* RedditParser.swift */; };
+		75AC40831ECDCB230090F7E4 /* Domain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75AC40821ECDCB230090F7E4 /* Domain.swift */; };
+		75AC40851ECDD6F10090F7E4 /* RepositoryAlamofire.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75AC40841ECDD6F10090F7E4 /* RepositoryAlamofire.swift */; };
+		75AC40871ECDD74A0090F7E4 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75AC40861ECDD74A0090F7E4 /* Parser.swift */; };
 		75F52AE81EBF61E600C838A6 /* UIImageViewURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F52AE71EBF61E600C838A6 /* UIImageViewURL.swift */; };
 		75F52AEA1EBF67B400C838A6 /* RedditCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 75F52AE91EBF67B400C838A6 /* RedditCell.xib */; };
 /* End PBXBuildFile section */
@@ -50,6 +53,9 @@
 		758EBDE31EBB7CCB003BE5A8 /* AppDebug.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDebug.swift; path = AppDebug/AppDebug.swift; sourceTree = "<group>"; };
 		758EBDE61EBB97FC003BE5A8 /* RepositoryManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RepositoryManager.swift; path = Repository/RepositoryManager.swift; sourceTree = "<group>"; };
 		758EBDE81EBB9B36003BE5A8 /* RedditParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RedditParser.swift; path = Domain/RedditParser.swift; sourceTree = "<group>"; };
+		75AC40821ECDCB230090F7E4 /* Domain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Domain.swift; path = Domain/Domain.swift; sourceTree = "<group>"; };
+		75AC40841ECDD6F10090F7E4 /* RepositoryAlamofire.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RepositoryAlamofire.swift; path = Repository/RepositoryAlamofire.swift; sourceTree = "<group>"; };
+		75AC40861ECDD74A0090F7E4 /* Parser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Parser.swift; path = Domain/Parser.swift; sourceTree = "<group>"; };
 		75F52AE71EBF61E600C838A6 /* UIImageViewURL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIImageViewURL.swift; path = Utility/UIImageViewURL.swift; sourceTree = "<group>"; };
 		75F52AE91EBF67B400C838A6 /* RedditCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = RedditCell.xib; path = Presentation/Cell/RedditCell.xib; sourceTree = "<group>"; };
 		94DF6539C839941D363A3CC3 /* Pods-redditClient.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-redditClient.debug.xcconfig"; path = "Pods/Target Support Files/Pods-redditClient/Pods-redditClient.debug.xcconfig"; sourceTree = "<group>"; };
@@ -144,6 +150,8 @@
 			children = (
 				758EBDE01EBB7A48003BE5A8 /* RedditDataModel.swift */,
 				758EBDE81EBB9B36003BE5A8 /* RedditParser.swift */,
+				75AC40861ECDD74A0090F7E4 /* Parser.swift */,
+				75AC40821ECDCB230090F7E4 /* Domain.swift */,
 			);
 			name = Domain;
 			sourceTree = "<group>";
@@ -160,6 +168,7 @@
 			isa = PBXGroup;
 			children = (
 				758EBDE61EBB97FC003BE5A8 /* RepositoryManager.swift */,
+				75AC40841ECDD6F10090F7E4 /* RepositoryAlamofire.swift */,
 			);
 			name = Repository;
 			sourceTree = "<group>";
@@ -346,6 +355,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				75AC40851ECDD6F10090F7E4 /* RepositoryAlamofire.swift in Sources */,
+				75AC40871ECDD74A0090F7E4 /* Parser.swift in Sources */,
 				7574C0A31EBE3122005928B4 /* ListReddictItemsViewController.swift in Sources */,
 				7574C0A61EBE321F005928B4 /* RedditCell.swift in Sources */,
 				758EBDE41EBB7CCB003BE5A8 /* AppDebug.swift in Sources */,
@@ -354,6 +365,7 @@
 				758EBDC01EBB7649003BE5A8 /* AppDelegate.swift in Sources */,
 				75F52AE81EBF61E600C838A6 /* UIImageViewURL.swift in Sources */,
 				758EBDE71EBB97FC003BE5A8 /* RepositoryManager.swift in Sources */,
+				75AC40831ECDCB230090F7E4 /* Domain.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
